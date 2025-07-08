@@ -5,15 +5,25 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
-console.log(process.env.MONGODB_URI);
+
+
 
 const app = express();
+const PORT = process.env.PORT || 5001
 
 connectDB();
 
+//middleware
+
+app.use(express.json())
+
+app.use((req, res, next) => {
+    console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
+});
+
 app.use("/api/notes", notesRoutes);
 
-app.listen(5001, ()  => {
-    console.log("server started on PORT: 5001");
+app.listen(PORT, ()  => {
+    console.log("server started on PORT:", PORT);
 
 });
